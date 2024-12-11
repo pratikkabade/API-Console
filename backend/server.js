@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const path = require('path');
 
 const app = express();
 const PORT = 5000;
@@ -18,13 +19,29 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'API is running...' });
 });
 
-// GET
 app.get('/api/data', (req, res) => {
   res.status(200).json({
     message: 'GET request received',
     data: dataStore,
   });
 });
+
+// Middleware to serve static assets
+app.use(express.static(path.join(__dirname, 'assets')));
+
+// Route to fetch the JSON file
+app.get('/api/getSavedRequests', (req, res) => {
+  const filePath = path.join(__dirname, 'assets', 'savedRequests.json');
+  res.sendFile(filePath, (err) => {
+    if (err) {
+      res.status(500).send({ error: 'Failed to load the file' });
+    }
+  });
+});
+
+
+
+// GET
 app.get('/api/data/:id', (req, res) => {
   // res.status(200).json({
   //   message: 'GET request received',
