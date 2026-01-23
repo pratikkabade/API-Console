@@ -20,6 +20,6 @@
     "noUnusedParameters": true,
     "noFallthroughCasesInSwitch": true
   },
-  "include": ["src"],
+  "include": ["src", "components/components-test/api-tester"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }
